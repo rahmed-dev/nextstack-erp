@@ -2,8 +2,11 @@ import { test, expect } from '../support/fixtures/test-fixtures';
 
 test.describe('Roles & navigation', () => {
   test('S-003: navigation reflects role permissions (P0)', async ({ page }) => {
-    // Owner view: default role (no override needed)
-
+    await page.goto('/');
+    await page.evaluate(() => {
+      window.localStorage.removeItem('nextstack.rolesConfig');
+      window.localStorage.setItem('nextstack.currentRole', 'System Admin');
+    });
     await page.goto('/');
 
     await expect(page.getByTestId('nav-dashboard')).toBeVisible();
@@ -12,9 +15,9 @@ test.describe('Roles & navigation', () => {
     await expect(page.getByTestId('nav-projects')).toBeVisible();
     await expect(page.getByTestId('nav-settings')).toBeVisible();
 
-    // Bookkeeper view: override role and navigate again
+    // Accounts User view: override role and navigate again
     await page.evaluate(() => {
-      window.localStorage.setItem('nextstack.currentRole', 'Bookkeeper');
+      window.localStorage.setItem('nextstack.currentRole', 'Accounts User');
     });
 
     await page.goto('/');
@@ -28,7 +31,8 @@ test.describe('Roles & navigation', () => {
 
   test('S-004: restricted users are blocked from forbidden screens (P0)', async ({ page }) => {
     await page.addInitScript(() => {
-      window.localStorage.setItem('nextstack.currentRole', 'Bookkeeper');
+      window.localStorage.removeItem('nextstack.rolesConfig');
+      window.localStorage.setItem('nextstack.currentRole', 'Accounts User');
     });
 
     await page.goto('/?module=projects');

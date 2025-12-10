@@ -1,6 +1,8 @@
 import React from "react";
 import { AppShell } from "../ui/layout/AppShell";
 import { DashboardHome } from "../features/dashboards";
+import { SalesInvoiceDraftPage } from "../features/sales-invoices";
+import { SettingsView } from "../features/settings";
 import { RoleName, canAccess } from "../core/rbac";
 
 type ModuleId = "dashboard" | "accounting" | "crm" | "projects" | "settings";
@@ -21,7 +23,7 @@ const MODULES: ModuleConfig[] = [
 
 function getInitialRole(): RoleName {
   if (typeof window === "undefined") {
-    return "Owner";
+    return "System Admin" as RoleName;
   }
 
   const stored = window.localStorage.getItem("nextstack.currentRole");
@@ -29,7 +31,7 @@ function getInitialRole(): RoleName {
     return stored as RoleName;
   }
 
-  return "Owner";
+  return "System Admin" as RoleName;
 }
 
 function getRequestedModule(): ModuleId | null {
@@ -88,6 +90,8 @@ export function AppRouter() {
             <>
               <p data-testid="active-module">Active module: {activeModule}</p>
               {activeModule === "dashboard" && <DashboardHome />}
+              {activeModule === "accounting" && <SalesInvoiceDraftPage />}
+              {activeModule === "settings" && <SettingsView />}
             </>
           )}
         </section>
@@ -95,4 +99,3 @@ export function AppRouter() {
     </AppShell>
   );
 }
-

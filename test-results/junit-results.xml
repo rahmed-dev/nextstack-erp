@@ -1,16 +1,32 @@
-<testsuites id="" name="" tests="4" failures="0" skipped="0" errors="0" time="3.689468">
-<testsuite name="rbac.navigation.spec.ts" timestamp="2025-12-10T20:13:11.338Z" hostname="chromium" tests="2" failures="0" skipped="0" time="2.271" errors="0">
-<testcase name="Roles &amp; navigation › S-003: navigation reflects role permissions (P0)" classname="rbac.navigation.spec.ts" time="1.291">
+<testsuites id="" name="" tests="10" failures="0" skipped="0" errors="0" time="5.51575">
+<testsuite name="rbac.navigation.spec.ts" timestamp="2025-12-10T20:45:54.927Z" hostname="chromium" tests="2" failures="0" skipped="0" time="2.328" errors="0">
+<testcase name="Roles &amp; navigation › S-003: navigation reflects role permissions (P0)" classname="rbac.navigation.spec.ts" time="1.454">
 </testcase>
-<testcase name="Roles &amp; navigation › S-004: restricted users are blocked from forbidden screens (P0)" classname="rbac.navigation.spec.ts" time="0.98">
-</testcase>
-</testsuite>
-<testsuite name="smoke.app-shell.spec.ts" timestamp="2025-12-10T20:13:11.338Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0.924" errors="0">
-<testcase name="App shell › S-001: loads main layout without errors (P0)" classname="smoke.app-shell.spec.ts" time="0.924">
+<testcase name="Roles &amp; navigation › S-004: restricted users are blocked from forbidden screens (P0)" classname="rbac.navigation.spec.ts" time="0.874">
 </testcase>
 </testsuite>
-<testsuite name="workspace.persistence.spec.ts" timestamp="2025-12-10T20:13:11.338Z" hostname="chromium" tests="1" failures="0" skipped="0" time="1.248" errors="0">
-<testcase name="Workspace persistence › S-002: minimal DocType-like data survives app reload (P0)" classname="workspace.persistence.spec.ts" time="1.248">
+<testsuite name="rbac.settings.spec.ts" timestamp="2025-12-10T20:45:54.927Z" hostname="chromium" tests="3" failures="0" skipped="0" time="4.303" errors="0">
+<testcase name="Roles &amp; Access settings (Story 3.6) › P0-1: default roles visible and editable" classname="rbac.settings.spec.ts" time="1.463">
+</testcase>
+<testcase name="Roles &amp; Access settings (Story 3.6) › P0-2/P0-3: module access configuration persisted and respected by navigation" classname="rbac.settings.spec.ts" time="1.436">
+</testcase>
+<testcase name="Roles &amp; Access settings (Story 3.6) › P0-4: direct access to forbidden module is blocked with clear message" classname="rbac.settings.spec.ts" time="1.404">
+</testcase>
+</testsuite>
+<testsuite name="sales-invoices.draft.spec.ts" timestamp="2025-12-10T20:45:54.927Z" hostname="chromium" tests="3" failures="0" skipped="0" time="3.527" errors="0">
+<testcase name="Sales invoices – Draft (Story 1.3) › P0-1: create valid Draft invoice with correct totals" classname="sales-invoices.draft.spec.ts" time="1.25">
+</testcase>
+<testcase name="Sales invoices – Draft (Story 1.3) › P0-2: editing Draft invoice preserves status and recalculates totals" classname="sales-invoices.draft.spec.ts" time="1.153">
+</testcase>
+<testcase name="Sales invoices – Draft (Story 1.3) › P0-3: invalid Draft invoices are blocked with clear validation" classname="sales-invoices.draft.spec.ts" time="1.124">
+</testcase>
+</testsuite>
+<testsuite name="smoke.app-shell.spec.ts" timestamp="2025-12-10T20:45:54.927Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0.66" errors="0">
+<testcase name="App shell › S-001: loads main layout without errors (P0)" classname="smoke.app-shell.spec.ts" time="0.66">
+</testcase>
+</testsuite>
+<testsuite name="workspace.persistence.spec.ts" timestamp="2025-12-10T20:45:54.927Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0.769" errors="0">
+<testcase name="Workspace persistence › S-002: minimal DocType-like data survives app reload (P0)" classname="workspace.persistence.spec.ts" time="0.769">
 </testcase>
 </testsuite>
 </testsuites>

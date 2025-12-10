@@ -1,0 +1,19 @@
+generated: "2025-12-08"
+project: "freelance_focus"
+project_type: "application"
+selected_track: "method-greenfield"
+field_type: "greenfield"
+workflow_path: ".bmad/bmm/workflows/workflow-status/paths/method-greenfield.yaml"
+
+workflow_status:
+  brainstorm-project: skipped
+  research: skipped
+  product-brief: "/home/riz/freelance_focus/nextstack-erp/docs/analysis/product-brief-freelance_focus-2025-12-08.md"
+  prd: "/home/riz/freelance_focus/nextstack-erp/docs/prd"
+  create-ux-design: "/home/riz/freelance_focus/nextstack-erp/docs/ux-design-specification/index.md"
+  create-architecture: "/home/riz/freelance_focus/nextstack-erp/docs/architecture/index.md"
+  create-epics-and-stories: "/home/riz/freelance_focus/nextstack-erp/docs/epics/index.md"
+  test-design: "/home/riz/freelance_focus/nextstack-erp/docs/test-design"
+  validate-architecture: "/home/riz/freelance_focus/nextstack-erp/docs/architecture/architecture-validation-results.md"
+  implementation-readiness: "/home/riz/freelance_focus/nextstack-erp/docs/implementation-readiness-report-2025-12-10.md"
+  sprint-planning: required

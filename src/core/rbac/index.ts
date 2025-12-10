@@ -1,30 +1,25 @@
 // RBAC metadata and helpers.
 
-export type RoleName = "Owner" | "Bookkeeper" | "Assistant" | (string & {});
+import { findRoleConfig, getDefaultRole, loadRolesConfig, type ModuleId } from "./config";
 
-type PermissionMap = Partial<Record<RoleName, string[]>>;
-
-// Simple module-level permissions for early vertical slices.
-const MODULE_PERMISSIONS: PermissionMap = {
-  Owner: [
-    "module:dashboard",
-    "module:accounting",
-    "module:crm",
-    "module:projects",
-    "module:settings"
-  ],
-  Bookkeeper: ["module:dashboard", "module:accounting"],
-  Assistant: ["module:dashboard"]
-};
+export type RoleName = string & {};
 
 export function canAccess(role: RoleName, resource: string, action: string): boolean {
   void action;
 
-  if (resource.startsWith("module:")) {
-    const allowed = MODULE_PERMISSIONS[role] ?? MODULE_PERMISSIONS.Owner ?? [];
-    return allowed.includes(resource);
+  if (!resource.startsWith("module:")) {
+    // Non-module resources will be governed by more detailed rules later.
+    return true;
   }
 
-  // Non-module resources will be governed by more detailed rules later.
-  return true;
+  const parts = resource.split(":");
+  const moduleId = parts[1] as ModuleId | undefined;
+  if (!moduleId) {
+    return false;
+  }
+
+  const roles = loadRolesConfig();
+  const roleConfig = findRoleConfig(role, roles) ?? getDefaultRole();
+
+  return roleConfig.modules.includes(moduleId);
 }
