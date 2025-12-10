@@ -1,0 +1,16 @@
+<testsuites id="" name="" tests="4" failures="0" skipped="0" errors="0" time="3.689468">
+<testsuite name="rbac.navigation.spec.ts" timestamp="2025-12-10T20:13:11.338Z" hostname="chromium" tests="2" failures="0" skipped="0" time="2.271" errors="0">
+<testcase name="Roles &amp; navigation › S-003: navigation reflects role permissions (P0)" classname="rbac.navigation.spec.ts" time="1.291">
+</testcase>
+<testcase name="Roles &amp; navigation › S-004: restricted users are blocked from forbidden screens (P0)" classname="rbac.navigation.spec.ts" time="0.98">
+</testcase>
+</testsuite>
+<testsuite name="smoke.app-shell.spec.ts" timestamp="2025-12-10T20:13:11.338Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0.924" errors="0">
+<testcase name="App shell › S-001: loads main layout without errors (P0)" classname="smoke.app-shell.spec.ts" time="0.924">
+</testcase>
+</testsuite>
+<testsuite name="workspace.persistence.spec.ts" timestamp="2025-12-10T20:13:11.338Z" hostname="chromium" tests="1" failures="0" skipped="0" time="1.248" errors="0">
+<testcase name="Workspace persistence › S-002: minimal DocType-like data survives app reload (P0)" classname="workspace.persistence.spec.ts" time="1.248">
+</testcase>
+</testsuite>
+</testsuites>
