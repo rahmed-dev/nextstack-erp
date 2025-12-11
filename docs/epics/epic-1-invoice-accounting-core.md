@@ -253,3 +253,59 @@ So that I can analyse it externally or share it with my accountant without being
 **When** I inspect the CSV files  
 **Then** each export uses a stable, documented column structure appropriate to that list or report  
 **And** the export action does not modify any underlying documents or ledger entries; it is a read-only operation
+
+## Story 1.11: Entity Master and Default Accounts
+
+As a freelancer-owner,
+I want to configure my business entity and its default accounts in one place,
+So that invoices, payments, expenses, and reports consistently use the right accounts without me reselecting them every time.
+
+**Acceptance Criteria:**
+
+**Given** I open the Entity setup area for my workspace  
+**When** I create a new Entity with at least: legal or trading name, base currency, country, tax ID, and an active/inactive flag  
+**Then** the Entity is saved and becomes available for selection in accounting doctypes that require an entity  
+**And** one Entity can be marked as the default so that new accounting documents automatically use it unless I choose a different one
+
+**Given** I am editing an Entity  
+**When** I set default accounts for receivables, payables, cash/bank, income, and expenses  
+**Then** those defaults must reference existing Accounts that belong to the same Entity  
+**And** when I later create a Sales Invoice, Purchase Invoice, Payment, or Expense, the system offers these defaults automatically while still allowing me to override them when appropriate
+
+**Given** there is already accounting activity (for example, posted invoices, payments, or GL entries) for an Entity  
+**When** I try to change that Entity’s base currency or deactivate it  
+**Then** the system blocks the change with a clear explanation, or only allows safe changes that do not break existing ledger data  
+**And** there is always at least one active default Entity before I can create new accounting documents
+
+**Given** multiple Entities exist in the workspace  
+**When** I create or edit accounting documents (Accounts, Clients, Vendors, Invoices, Payments, Expenses, GL entries)  
+**Then** the system enforces that linked Accounts and parties belong to the same Entity as the document  
+**And** it blocks cross-Entity combinations that would violate the entity-scoped consistency rules, with clear error messages.
+
+## Story 1.12: Accounting Settings Single Doctype
+
+As a freelancer-owner,
+I want a single accounting settings screen per Entity for numbering and ageing rules,
+So that document numbers and “approaching due/overdue” indicators follow clear, configurable rules instead of hard-coded behaviour.
+
+**Acceptance Criteria:**
+
+**Given** I open Accounting Settings for a specific Entity  
+**When** I configure numbering patterns for sales invoices, purchase invoices, payments, and optionally expenses and journal entries (for example `SINV-{yyyy}-{seq:5}`)  
+**Then** new documents of those types use the configured patterns when generating their document numbers  
+**And** changing a pattern only affects numbers assigned in the future and does not rewrite or invalidate existing document numbers
+
+**Given** I am in Accounting Settings  
+**When** I set values for “approaching due” and “significantly overdue” day thresholds  
+**Then** receivables/payables views and any money cockpit widgets use these values to determine which invoices are approaching due or overdue  
+**And** there are no hard-coded day counts in the application logic; updating the thresholds changes how invoices are classified without altering stored document data
+
+**Given** Accounting Settings are modelled as a single configuration per Entity rather than a list of records  
+**When** I open Accounting Settings from navigation or from an Entity detail screen  
+**Then** I go straight into the configuration view for that Entity (without a separate list)  
+**And** saving settings does not create history rows or duplicates; it simply updates the Entity’s configuration in place
+
+**Given** I have configured Accounting Settings for an Entity  
+**When** I create or post accounting documents in that Entity  
+**Then** the numbering helper and ageing helper read all required values from Accounting Settings instead of hard-coding rules in UI or service code  
+**And** if required settings are missing, the system prompts me to complete Accounting Settings before allowing operations that depend on them.

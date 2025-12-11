@@ -24,7 +24,7 @@
 ## Data Architecture
 
 - **DocType-first model:** All business entities (Invoice, Payment, GL Entry, Lead, Project, Task, etc.) are defined as DocTypes in metadata (fields, constraints, permissions). The SQLite schema is generated from these DocTypes and kept in sync with them.
-- **Primary keys:** Each document has a globally unique UUID/ULID primary key, used in relationships and in the ops log. External systems (e.g., Upwork) keep their own IDs in separate fields or mapping tables.
+- **Primary keys:** Each document has a stable string primary key (`name`) used as the canonical identifier in relationships, print formats, exports, and the ops log. For accounting doctypes (invoices, payments, expenses, journal entries), this `name` is typically generated from a configurable naming series (for example `SINV-{yyyy}-{seq:5}`) and doubles as the human-facing document number. External systems (e.g., Upwork) keep their own IDs in separate fields or mapping tables.
 - **Document service & hooks:** All creates/updates/deletes flow through a central document service that enforces:
   - Validation and lifecycle hooks (TypeScript-style naming): `validate`, `beforeInsert`, `afterInsert`, `beforeUpdate`, `afterUpdate`, `beforeSubmit`, `afterSubmit`, `beforeCancel`, `afterCancel`.
   - Consistency guarantees for accounting flows (e.g., GL must always balance when invoices, payments, or expenses are posted).

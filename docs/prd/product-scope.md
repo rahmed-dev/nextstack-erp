@@ -15,6 +15,7 @@ For NextStack ERP, the MVP focuses on proving the full “lead → work → mone
 - **Accounting foundation:**  
   - Chart of Accounts suitable for freelancers/small agencies.  
   - GL Entry, Journal Entry, Sales Invoice, Purchase Invoice, Payment doctypes wired together so posted entries keep the ledger accurate.  
+  - A per-entity master (`Entity`) holding base currency and default accounts, and an accounting settings surface (`AccountingSettings` single DocType) that controls numbering patterns and ageing rules in a configurable way rather than via hard-coded logic.  
   - Basic General Ledger view (filter by account and date range).
 
 - **Platform & architecture:**  
