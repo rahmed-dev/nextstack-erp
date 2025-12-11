@@ -100,6 +100,9 @@
 - Extensibility and customization:
   - A module and DocType layer that can evolve like a lighter-weight Frappe.
   - Mechanisms for adding fields, doctypes, and modules without destabilizing the core.
+- Cross-module systems vs one-offs:
+  - Prefer designing reusable, platform-level systems for common capabilities (DocType engine, naming/numbering, printing, CSV export, ledger posting, audit) that modules configure, rather than duplicating logic inside each module.
+  - When new needs appear in a single module, consciously evaluate whether they should become a cross-module capability like the print engine or CSV export.
 - Observability and recovery:
   - Logging and diagnostics suitable for a desktop app.
   - Safe paths to recover from sync issues or schema upgrades.

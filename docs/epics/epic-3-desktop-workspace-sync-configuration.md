@@ -92,6 +92,11 @@ So that my local data is protected and can be used across devices without runnin
 **Then** those changes are synchronised to Google Drive using the ops log-based sync approach  
 **And** on another device with the same workspace connected, the app can pull and apply those changes without silently breaking accounting integrity
 
+**Given** I have one or more existing local-only workspaces on my devices  
+**When** I enable sync and choose to link a workspace to Google Drive  
+**Then** I explicitly select which workspace becomes the shared Drive-backed workspace  
+**And** the app does not silently merge unrelated histories between different workspaces
+
 **Given** I am working offline or sync temporarily fails  
 **When** I continue to create and edit documents  
 **Then** all changes are stored locally and core workflows remain available  

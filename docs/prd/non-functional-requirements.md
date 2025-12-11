@@ -8,6 +8,7 @@
 
 - Posted accounting entries must never be silently lost or corrupted; if an operation would risk data inconsistency, the system should block it and surface a clear error instead.
 - The system must preserve a consistent, balanced general ledger across app restarts and updates.
+- Core business documents (such as invoices, payments, expenses, leads, and projects) must have an accessible record-level audit trail that shows who changed what and when, so changes can be traced over time.
 
 ### Security
 
@@ -18,3 +19,4 @@
 
 - Sync operations to and from Google Drive must not result in partial application of changes that breaks accounting integrity; ledger data should always remain balanced and consistent after sync.
 - When sync fails or is incomplete, the system must clearly indicate sync status and preserve all local work, without blocking core offline operations.
+- When enabling sync for an existing local workspace or attaching a device to a Drive-backed workspace, the system must not implicitly merge unrelated workspaces; the user explicitly chooses which workspace to sync, and any cleanup of sync history must preserve full business data.

@@ -43,6 +43,12 @@
   - Examples: `useSalesInvoiceList` in `use-sales-invoice-list.ts`.
 - Routes (if/when exposed) are plural, `kebab-case`:
   - Examples: `/accounting/sales-invoices`, `/crm/leads`.
+- **Configurable DocType numbering (all modules):**
+  - Submittable DocTypes across all modules (Accounting, CRM, Projects, etc.) do not hard-code naming/series logic in UI or domain code.
+  - Instead, they delegate to a central naming/numbering helper (for example `src/core/document/naming.ts`) which:
+    - Reads per-DocType series patterns from configuration (module settings DocTypes such as `AccountingSettings`, `CrmSettings`, `ProjectsSettings`, or a shared `NamingSettings` single DocType).
+    - Applies Entity-scoped patterns where the module is Entity-bound.
+  - Series pattern changes are forward-only (new documents only) and never rewrite existing `name` values.
 
 ## Structure Patterns
 
@@ -67,6 +73,13 @@
 - Documentation:
   - Product and architecture docs live under `docs/` (existing structure).
   - Developer-focused docs (if added) live under `docs/dev/`.
+- **Entity-scoped accounting structures:**
+  - All accounting DocTypes that affect the ledger (`Entity`, `AccountingSettings`, `Account`, `SalesInvoice`, `PurchaseInvoice`, `Payment`, `Expense`, `GLEntry`, and related child tables) include an `entity` field that scopes them to a single business entity.
+  - Domain logic that creates or mutates these documents:
+    - Must ensure a single `entity` per document and per posted ledger batch.
+    - Must resolve defaults (receivable/payable/cash/income/expense accounts, numbering series, ageing thresholds) via the combination of `Entity` and `AccountingSettings` rather than duplicated constants.
+  - Cross-Entity combinations within a single document (for example, an invoice using an Account from another Entity) are invalid and should surface as domain validation errors.
+  - An Entity’s `base_currency` is treated as immutable once any GL activity exists for that Entity; attempts to change it must be blocked with a clear error.
 
 ## Format Patterns
 
@@ -123,6 +136,7 @@
 - Route all persistence and domain logic through the established domain services and document engine, not direct SQL or ad-hoc Tauri commands.
 - Respect the standard result envelope `{ data, error }` and the error/technical-details UI pattern for any user-visible errors.
 - Place new code within the agreed structure (`core`, `modules`, `ui`, `features`) and co-locate tests with the code they exercise.
+ - Treat cross-module systems (naming engine, print engine, CSV export, ledger service, DocType engine) as the default extension points; when a new feature smells like it repeats an existing capability, extend these systems or add a new reusable one instead of hard-coding behavior in a single module.
 
 **Pattern Enforcement:**
 - When implementing features, agents should:

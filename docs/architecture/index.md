@@ -41,3 +41,4 @@
     - [Architecture Completeness Checklist](./architecture-validation-results.md#architecture-completeness-checklist)
     - [Architecture Readiness Assessment](./architecture-validation-results.md#architecture-readiness-assessment)
   - [Accounting Generic Mechanisms (Epic 1)](./accounting-generic-mechanisms-epic-1.md)
+    - Cross-cutting mechanisms for DocTypes, Entity-scoped accounting, the ledger engine, print/CSV export, and expense/payment helpers introduced while preparing Epic 1.

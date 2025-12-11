@@ -160,8 +160,9 @@ So that day-to-day costs still show up correctly in my accounting without heavy 
 **Acceptance Criteria:**
 
 **Given** I open the Expenses screen  
-**When** I create a new expense with at least: date, amount, currency, expense account, and an optional client/project/link  
+**When** I create a new expense with at least: date, amount, currency, an expense category, and a payment method (plus an optional client/project/link)  
 **Then** the expense is saved and appears in the Expenses list with key fields visible  
+**And** the system derives the underlying expense and payment accounts from the selected category and payment method so that GL posting follows the configured mappings  
 **And** the expense becomes available for inclusion in accounting reports
 
 **Given** an existing expense that has been saved but is not locked by later controls  

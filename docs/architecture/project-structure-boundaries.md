@@ -22,7 +22,7 @@ nextstack-erp/
 │   │   └── providers.tsx          # Query client, stores, theming
 │   ├── core/                      # Platform engine
 │   │   ├── doctypes/              # DocType metadata + helpers
-│   │   ├── document/              # Document service + hooks pipeline
+│   │   ├── document/              # Document service, hooks pipeline, naming engine, print engine, CSV export
 │   │   ├── ledger/                # Ledger service, posting rules
 │   │   ├── rbac/                  # Roles, permissions, checks
 │   │   ├── audit/                 # Audit/version tables + helpers
@@ -89,7 +89,7 @@ nextstack-erp/
 
 **Billing & Cash Flow (FR1–FR12):**
 - DocTypes & domain logic:
-  - `src/modules/accounting/doctypes/` (`sales_invoice`, `purchase_invoice`, `payment`, `expense`).
+  - `src/modules/accounting/doctypes/` (`entity`, `account`, `sales_invoice`, `purchase_invoice`, `payment`, `expense`, `expense_category`, `payment_method`, `accounting_settings`).
   - `src/modules/accounting/domain/` (posting rules, invoice status transitions, due/overdue calculations).
 - UI flows:
   - `src/features/sales-invoices/` (list, form, detail view).
@@ -127,7 +127,7 @@ nextstack-erp/
   - `src/core/sync/` (workspace discovery, Drive sync orchestration).
   - `src/core/opslog/` (ops capture, snapshotting, retention).
 - Settings and configuration:
-  - `src/features/settings/` (user-facing settings screens, including startup behavior and sync options).
+  - `src/features/settings/` (user-facing settings screens, including startup behavior, sync options, Entity and AccountingSettings management, cross-module naming/series configuration, and print/export configuration).
 
 ## Integration Points
 

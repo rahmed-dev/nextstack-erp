@@ -14,7 +14,7 @@
 - FR8: Freelancer can record payments made against one or more purchase invoices.
 - FR9: Freelancer can view lists of sales invoices and purchase invoices with filters for client/vendor, status, date range, and amount.
 - FR10: Freelancer can view a focused list of client invoices approaching due within a chosen window and those more than seven days overdue.
-- FR11: Freelancer can record simple expenses that do not require a dedicated purchase invoice (for example, quick out-of-pocket expenses).
+- FR11: Freelancer can record simple expenses that do not require a dedicated purchase invoice (for example, quick out-of-pocket expenses), using configurable expense categories and payment methods that map to the correct accounts automatically.
 - FR12: Freelancer can generate and view printable or shareable sales invoice documents for clients.
 
 **Transactional document lifecycle (invoices, payments, expenses, journal entries):**
