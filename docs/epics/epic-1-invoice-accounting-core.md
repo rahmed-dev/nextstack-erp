@@ -219,7 +219,7 @@ So that I can correct or adjust my books while keeping the general ledger balanc
 **Then** the document status moves to Cancelled and its ledger impact is reversed while the original document remains in history  
 **And** if I use an Amend flow, the system creates a new Draft journal entry linked to the cancelled one with its own unique ID so that the revised entry can be submitted separately
 
-## Story 1.9: Invoice Documents and Delivery
+## Story 1.9: Invoice Documents and Delivery === IIgnore this story: it is discarded.
 
 As a freelancer-owner,
 I want to generate printable or shareable invoice documents and record how I delivered them to clients,
