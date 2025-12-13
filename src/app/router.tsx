@@ -4,6 +4,7 @@ import { DashboardHome } from "../features/dashboards";
 import { SalesInvoiceDraftPage } from "../features/sales-invoices";
 import { SettingsView } from "../features/settings";
 import { RoleName, canAccess } from "../core/rbac";
+import { ListingScreen } from "../ui/components/listing/ListingScreen";
 
 type ModuleId = "dashboard" | "accounting" | "crm" | "projects" | "settings";
 
@@ -45,9 +46,24 @@ function getRequestedModule(): ModuleId | null {
   return moduleParam;
 }
 
+function getRequestedView(): string | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  return params.get("view");
+}
+
 export function AppRouter() {
   const [role] = React.useState<RoleName>(() => getInitialRole());
   const [requestedModule] = React.useState<ModuleId | null>(() => getRequestedModule());
+  const [requestedView] = React.useState<string | null>(() => getRequestedView());
+  const viewToDocType: Record<string, string> = {
+    "chart-of-accounts": "ChartOfAccount",
+    clients: "Client",
+    vendors: "Vendor"
+  };
 
   const visibleModules = MODULES.filter((module) =>
     canAccess(role, module.resource, "view")
@@ -90,7 +106,18 @@ export function AppRouter() {
             <>
               <p data-testid="active-module">Active module: {activeModule}</p>
               {activeModule === "dashboard" && <DashboardHome />}
-              {activeModule === "accounting" && <SalesInvoiceDraftPage />}
+              {activeModule === "accounting" &&
+                (requestedView === "chart-of-accounts" ? (
+                  <ListingScreen docType={viewToDocType["chart-of-accounts"]} />
+                ) : (
+                  <SalesInvoiceDraftPage />
+                ))}
+              {activeModule === "crm" &&
+                (requestedView === "clients" || requestedView === "vendors" ? (
+                  <ListingScreen docType={viewToDocType[requestedView ?? ""]} />
+                ) : (
+                  <p>CRM home</p>
+                ))}
               {activeModule === "settings" && <SettingsView />}
             </>
           )}

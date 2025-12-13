@@ -1,32 +1,234 @@
-<testsuites id="" name="" tests="10" failures="0" skipped="0" errors="0" time="5.51575">
-<testsuite name="rbac.navigation.spec.ts" timestamp="2025-12-10T20:45:54.927Z" hostname="chromium" tests="2" failures="0" skipped="0" time="2.328" errors="0">
-<testcase name="Roles &amp; navigation › S-003: navigation reflects role permissions (P0)" classname="rbac.navigation.spec.ts" time="1.454">
+<testsuites id="" name="" tests="5" failures="5" skipped="0" errors="0" time="37.559148">
+<testsuite name="listing/shared-listing.spec.ts" timestamp="2025-12-13T10:47:11.880Z" hostname="chromium" tests="5" failures="5" skipped="0" time="86.117" errors="0">
+<testcase name="Shared Listing Framework › P0-E2E-1: list variant exposes shared primitives (filters/search/toolbar/actions)" classname="listing/shared-listing.spec.ts" time="17.477">
+<failure message="shared-listing.spec.ts:17:7 P0-E2E-1: list variant exposes shared primitives (filters/search/toolbar/actions)" type="FAILURE">
+<![CDATA[  [chromium] › listing/shared-listing.spec.ts:17:7 › Shared Listing Framework › P0-E2E-1: list variant exposes shared primitives (filters/search/toolbar/actions) 
+
+    TimeoutError: page.waitForResponse: Timeout 15000ms exceeded while waiting for event "response"
+
+      17 |   test('P0-E2E-1: list variant exposes shared primitives (filters/search/toolbar/actions)', async ({ page }) => {
+      18 |     // GIVEN: Chart of Accounts list rendered via shared listing (flat variant)
+    > 19 |     const filtersPromise = page.waitForResponse((resp) => resp.url().includes('/api/chart-of-accounts') && resp.status() === 200);
+         |                                 ^
+      20 |     await page.goto('/?module=accounting&view=chart-of-accounts');
+      21 |     await filtersPromise;
+      22 |
+        at /home/riz/freelance_focus/nextstack-erp/tests/e2e/listing/shared-listing.spec.ts:19:33
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/listing-shared-listing-Sha-07793-ers-search-toolbar-actions--chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/listing-shared-listing-Sha-07793-ers-search-toolbar-actions--chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/listing-shared-listing-Sha-07793-ers-search-toolbar-actions--chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../test-results/listing-shared-listing-Sha-07793-ers-search-toolbar-actions--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../test-results/listing-shared-listing-Sha-07793-ers-search-toolbar-actions--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|listing-shared-listing-Sha-07793-ers-search-toolbar-actions--chromium/test-failed-1.png]]
+
+[[ATTACHMENT|listing-shared-listing-Sha-07793-ers-search-toolbar-actions--chromium/video.webm]]
+
+[[ATTACHMENT|listing-shared-listing-Sha-07793-ers-search-toolbar-actions--chromium/error-context.md]]
+
+[[ATTACHMENT|listing-shared-listing-Sha-07793-ers-search-toolbar-actions--chromium/trace.zip]]
+]]>
+</system-out>
 </testcase>
-<testcase name="Roles &amp; navigation › S-004: restricted users are blocked from forbidden screens (P0)" classname="rbac.navigation.spec.ts" time="0.874">
+<testcase name="Shared Listing Framework › P0-E2E-2: tree variant supports expand/collapse with shared toolbar" classname="listing/shared-listing.spec.ts" time="17.484">
+<failure message="shared-listing.spec.ts:34:7 P0-E2E-2: tree variant supports expand/collapse with shared toolbar" type="FAILURE">
+<![CDATA[  [chromium] › listing/shared-listing.spec.ts:34:7 › Shared Listing Framework › P0-E2E-2: tree variant supports expand/collapse with shared toolbar 
+
+    TimeoutError: page.waitForResponse: Timeout 15000ms exceeded while waiting for event "response"
+
+      34 |   test('P0-E2E-2: tree variant supports expand/collapse with shared toolbar', async ({ page }) => {
+      35 |     // GIVEN: Tree listing for Chart of Accounts
+    > 36 |     const treeResponse = page.waitForResponse((resp) => resp.url().includes('/api/chart-of-accounts/tree') && resp.status() === 200);
+         |                               ^
+      37 |     await page.goto('/?module=accounting&view=chart-of-accounts');
+      38 |     await treeResponse;
+      39 |
+        at /home/riz/freelance_focus/nextstack-erp/tests/e2e/listing/shared-listing.spec.ts:36:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/listing-shared-listing-Sha-f7fac-ollapse-with-shared-toolbar-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/listing-shared-listing-Sha-f7fac-ollapse-with-shared-toolbar-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/listing-shared-listing-Sha-f7fac-ollapse-with-shared-toolbar-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../test-results/listing-shared-listing-Sha-f7fac-ollapse-with-shared-toolbar-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../test-results/listing-shared-listing-Sha-f7fac-ollapse-with-shared-toolbar-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|listing-shared-listing-Sha-f7fac-ollapse-with-shared-toolbar-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|listing-shared-listing-Sha-f7fac-ollapse-with-shared-toolbar-chromium/video.webm]]
+
+[[ATTACHMENT|listing-shared-listing-Sha-f7fac-ollapse-with-shared-toolbar-chromium/error-context.md]]
+
+[[ATTACHMENT|listing-shared-listing-Sha-f7fac-ollapse-with-shared-toolbar-chromium/trace.zip]]
+]]>
+</system-out>
 </testcase>
-</testsuite>
-<testsuite name="rbac.settings.spec.ts" timestamp="2025-12-10T20:45:54.927Z" hostname="chromium" tests="3" failures="0" skipped="0" time="4.303" errors="0">
-<testcase name="Roles &amp; Access settings (Story 3.6) › P0-1: default roles visible and editable" classname="rbac.settings.spec.ts" time="1.463">
+<testcase name="Shared Listing Framework › P0-E2E-3: shared action slots drive selection + bulk actions" classname="listing/shared-listing.spec.ts" time="17.451">
+<failure message="shared-listing.spec.ts:48:7 P0-E2E-3: shared action slots drive selection + bulk actions" type="FAILURE">
+<![CDATA[  [chromium] › listing/shared-listing.spec.ts:48:7 › Shared Listing Framework › P0-E2E-3: shared action slots drive selection + bulk actions 
+
+    TimeoutError: page.waitForResponse: Timeout 15000ms exceeded while waiting for event "response"
+
+      47 |
+      48 |   test('P0-E2E-3: shared action slots drive selection + bulk actions', async ({ page }) => {
+    > 49 |     const listResponse = page.waitForResponse((resp) => resp.url().includes('/api/clients') && resp.status() === 200);
+         |                               ^
+      50 |     await page.goto('/?module=crm&view=clients');
+      51 |     await listResponse;
+      52 |
+        at /home/riz/freelance_focus/nextstack-erp/tests/e2e/listing/shared-listing.spec.ts:49:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/listing-shared-listing-Sha-61d80-rive-selection-bulk-actions-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/listing-shared-listing-Sha-61d80-rive-selection-bulk-actions-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/listing-shared-listing-Sha-61d80-rive-selection-bulk-actions-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../test-results/listing-shared-listing-Sha-61d80-rive-selection-bulk-actions-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../test-results/listing-shared-listing-Sha-61d80-rive-selection-bulk-actions-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|listing-shared-listing-Sha-61d80-rive-selection-bulk-actions-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|listing-shared-listing-Sha-61d80-rive-selection-bulk-actions-chromium/video.webm]]
+
+[[ATTACHMENT|listing-shared-listing-Sha-61d80-rive-selection-bulk-actions-chromium/error-context.md]]
+
+[[ATTACHMENT|listing-shared-listing-Sha-61d80-rive-selection-bulk-actions-chromium/trace.zip]]
+]]>
+</system-out>
 </testcase>
-<testcase name="Roles &amp; Access settings (Story 3.6) › P0-2/P0-3: module access configuration persisted and respected by navigation" classname="rbac.settings.spec.ts" time="1.436">
+<testcase name="Shared Listing Framework › P0-E2E-4: saved filter views persist across modules using shared store" classname="listing/shared-listing.spec.ts" time="17.396">
+<failure message="shared-listing.spec.ts:63:7 P0-E2E-4: saved filter views persist across modules using shared store" type="FAILURE">
+<![CDATA[  [chromium] › listing/shared-listing.spec.ts:63:7 › Shared Listing Framework › P0-E2E-4: saved filter views persist across modules using shared store 
+
+    TimeoutError: page.waitForResponse: Timeout 15000ms exceeded while waiting for event "response"
+
+      62 |
+      63 |   test('P0-E2E-4: saved filter views persist across modules using shared store', async ({ page }) => {
+    > 64 |     const listResponse = page.waitForResponse((resp) => resp.url().includes('/api/clients') && resp.status() === 200);
+         |                               ^
+      65 |     await page.goto('/?module=crm&view=clients');
+      66 |     await listResponse;
+      67 |
+        at /home/riz/freelance_focus/nextstack-erp/tests/e2e/listing/shared-listing.spec.ts:64:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/listing-shared-listing-Sha-3ab63--modules-using-shared-store-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/listing-shared-listing-Sha-3ab63--modules-using-shared-store-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/listing-shared-listing-Sha-3ab63--modules-using-shared-store-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../test-results/listing-shared-listing-Sha-3ab63--modules-using-shared-store-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../test-results/listing-shared-listing-Sha-3ab63--modules-using-shared-store-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|listing-shared-listing-Sha-3ab63--modules-using-shared-store-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|listing-shared-listing-Sha-3ab63--modules-using-shared-store-chromium/video.webm]]
+
+[[ATTACHMENT|listing-shared-listing-Sha-3ab63--modules-using-shared-store-chromium/error-context.md]]
+
+[[ATTACHMENT|listing-shared-listing-Sha-3ab63--modules-using-shared-store-chromium/trace.zip]]
+]]>
+</system-out>
 </testcase>
-<testcase name="Roles &amp; Access settings (Story 3.6) › P0-4: direct access to forbidden module is blocked with clear message" classname="rbac.settings.spec.ts" time="1.404">
-</testcase>
-</testsuite>
-<testsuite name="sales-invoices.draft.spec.ts" timestamp="2025-12-10T20:45:54.927Z" hostname="chromium" tests="3" failures="0" skipped="0" time="3.527" errors="0">
-<testcase name="Sales invoices – Draft (Story 1.3) › P0-1: create valid Draft invoice with correct totals" classname="sales-invoices.draft.spec.ts" time="1.25">
-</testcase>
-<testcase name="Sales invoices – Draft (Story 1.3) › P0-2: editing Draft invoice preserves status and recalculates totals" classname="sales-invoices.draft.spec.ts" time="1.153">
-</testcase>
-<testcase name="Sales invoices – Draft (Story 1.3) › P0-3: invalid Draft invoices are blocked with clear validation" classname="sales-invoices.draft.spec.ts" time="1.124">
-</testcase>
-</testsuite>
-<testsuite name="smoke.app-shell.spec.ts" timestamp="2025-12-10T20:45:54.927Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0.66" errors="0">
-<testcase name="App shell › S-001: loads main layout without errors (P0)" classname="smoke.app-shell.spec.ts" time="0.66">
-</testcase>
-</testsuite>
-<testsuite name="workspace.persistence.spec.ts" timestamp="2025-12-10T20:45:54.927Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0.769" errors="0">
-<testcase name="Workspace persistence › S-002: minimal DocType-like data survives app reload (P0)" classname="workspace.persistence.spec.ts" time="0.769">
+<testcase name="Shared Listing Framework › P0-E2E-5: inline row actions use shared confirmation + error surface" classname="listing/shared-listing.spec.ts" time="16.309">
+<failure message="shared-listing.spec.ts:88:7 P0-E2E-5: inline row actions use shared confirmation + error surface" type="FAILURE">
+<![CDATA[  [chromium] › listing/shared-listing.spec.ts:88:7 › Shared Listing Framework › P0-E2E-5: inline row actions use shared confirmation + error surface 
+
+    TimeoutError: page.waitForResponse: Timeout 15000ms exceeded while waiting for event "response"
+
+      87 |
+      88 |   test('P0-E2E-5: inline row actions use shared confirmation + error surface', async ({ page }) => {
+    > 89 |     const listResponse = page.waitForResponse((resp) => resp.url().includes('/api/chart-of-accounts') && resp.status() === 200);
+         |                               ^
+      90 |     await page.goto('/?module=accounting&view=chart-of-accounts');
+      91 |     await listResponse;
+      92 |
+        at /home/riz/freelance_focus/nextstack-erp/tests/e2e/listing/shared-listing.spec.ts:89:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/listing-shared-listing-Sha-0bc4e--confirmation-error-surface-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/listing-shared-listing-Sha-0bc4e--confirmation-error-surface-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/listing-shared-listing-Sha-0bc4e--confirmation-error-surface-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../test-results/listing-shared-listing-Sha-0bc4e--confirmation-error-surface-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../test-results/listing-shared-listing-Sha-0bc4e--confirmation-error-surface-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|listing-shared-listing-Sha-0bc4e--confirmation-error-surface-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|listing-shared-listing-Sha-0bc4e--confirmation-error-surface-chromium/video.webm]]
+
+[[ATTACHMENT|listing-shared-listing-Sha-0bc4e--confirmation-error-surface-chromium/error-context.md]]
+
+[[ATTACHMENT|listing-shared-listing-Sha-0bc4e--confirmation-error-surface-chromium/trace.zip]]
+]]>
+</system-out>
 </testcase>
 </testsuite>
 </testsuites>

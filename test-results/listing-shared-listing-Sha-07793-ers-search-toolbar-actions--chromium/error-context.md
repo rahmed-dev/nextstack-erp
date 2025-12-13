@@ -1,0 +1,52 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "NextStack ERP" [level=1] [ref=e5]
+  - main [ref=e6]:
+    - generic [ref=e7]:
+      - navigation "Main navigation" [ref=e8]:
+        - list [ref=e9]:
+          - listitem [ref=e10]:
+            - link "Dashboard" [ref=e11] [cursor=pointer]:
+              - /url: /?module=dashboard
+          - listitem [ref=e12]:
+            - link "Accounting" [ref=e13] [cursor=pointer]:
+              - /url: /?module=accounting
+          - listitem [ref=e14]:
+            - link "CRM" [ref=e15] [cursor=pointer]:
+              - /url: /?module=crm
+          - listitem [ref=e16]:
+            - link "Projects" [ref=e17] [cursor=pointer]:
+              - /url: /?module=projects
+          - listitem [ref=e18]:
+            - link "Settings" [ref=e19] [cursor=pointer]:
+              - /url: /?module=settings
+      - region "Workspace content" [ref=e20]:
+        - paragraph [ref=e21]: "Active module: accounting"
+        - generic [ref=e22]:
+          - generic [ref=e23]:
+            - generic [ref=e24]:
+              - text: status
+              - combobox "status" [ref=e25]:
+                - option "Any" [selected]
+                - option "active"
+                - option "archived"
+            - generic [ref=e26]:
+              - text: entity
+              - combobox "entity" [ref=e27]:
+                - option "Any" [selected]
+            - generic [ref=e28]:
+              - text: Search
+              - textbox "Search" [ref=e29]:
+                - /placeholder: Search...
+          - generic [ref=e30]:
+            - button "Save View" [ref=e31]
+            - textbox "View name" [ref=e32]
+            - button "Confirm Save" [ref=e33]
+            - list
+          - generic [ref=e36]:
+            - button "Toggle tree row" [ref=e37]: +
+            - text: Assets
+```
