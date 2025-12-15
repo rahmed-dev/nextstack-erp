@@ -58,6 +58,166 @@ As a developer, I want a unified audit engine controlled by DocType metadata, so
 - SQLite storage; TypeScript document service + hooks.
 - No direct UI required now; expose service/helpers for future UI.
 
+### Library Dependencies
+
+**Required:**
+- `fast-json-patch`: ^3.x - RFC 6902 JSON Patch for structured field-level diffs
+- SQLite (via Tauri) - Audit log persistence
+
+**Diff Library Rationale:**
+- `fast-json-patch` generates standardized JSON Patch operations: `{ op: "replace", path: "/field", value: "new" }`
+- Stores audit diffs in parseable, queryable format
+- Supports reverse operations for potential rollback features
+- Lighter than full object comparison libraries
+
+### Audit Log Table Schema
+
+**Table: `audit_log`**
+```sql
+CREATE TABLE audit_log (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  doc_type TEXT NOT NULL,
+  doc_name TEXT NOT NULL,
+  entity_id TEXT, -- nullable, for entity-scoped documents
+  operation TEXT NOT NULL, -- 'create'|'update'|'archive'|'delete'|'submit'|'cancel'|'amend'
+  user_id TEXT NOT NULL, -- 'system' for automated operations
+  timestamp INTEGER NOT NULL, -- Unix epoch milliseconds
+  changes_json TEXT, -- JSON Patch array or field summary
+  comment TEXT, -- optional user-provided comment
+
+  -- Audit metadata
+  before_status TEXT, -- document status before operation
+  after_status TEXT,  -- document status after operation
+
+  FOREIGN KEY (entity_id) REFERENCES entities(id) ON DELETE CASCADE
+);
+
+-- Indexes for common queries
+CREATE INDEX idx_audit_doctype_name ON audit_log(doc_type, doc_name, timestamp DESC);
+CREATE INDEX idx_audit_entity ON audit_log(entity_id, timestamp DESC);
+CREATE INDEX idx_audit_operation ON audit_log(operation, timestamp DESC);
+CREATE INDEX idx_audit_user ON audit_log(user_id, timestamp DESC);
+```
+
+**Migration Notes:**
+- Create in initial schema migration (0001_create_audit_tables.sql)
+- Entity FK cascade ensures cleanup when entities deleted
+- Timestamp stored as INTEGER for SQLite compatibility and query performance
+
+### Hook Registration and Execution Pattern
+
+**Hook Registration (in document service initialization):**
+```typescript
+// src/core/document/service.ts
+class DocumentService {
+  private hooks = {
+    beforeCreate: [],
+    afterCreate: [],
+    beforeUpdate: [],
+    afterUpdate: [],
+    beforeArchive: [],
+    afterArchive: [],
+    beforeDelete: [],
+    afterDelete: [],
+    beforeSubmit: [],
+    afterSubmit: [],
+    beforeCancel: [],
+    afterCancel: []
+  }
+
+  registerHook(event: HookEvent, handler: HookHandler) {
+    this.hooks[event].push(handler)
+  }
+}
+
+// Hook registration (audit module)
+documentService.registerHook('afterCreate', auditWriter.onAfterCreate)
+documentService.registerHook('afterUpdate', auditWriter.onAfterUpdate)
+// ... register all lifecycle hooks
+```
+
+**Execution Order:**
+1. `before*` hooks execute in registration order (validation, state checks)
+2. **Core operation** executes (database write)
+3. `after*` hooks execute in registration order (audit, notifications, sync queue)
+4. Audit writer runs **after** core operation to ensure document committed
+
+**Hook Handler Signature:**
+```typescript
+type HookHandler = (context: {
+  docType: string
+  docName: string
+  before?: any // previous document state (for updates)
+  after: any   // new document state
+  operation: Operation
+  user: string
+}) => Promise<void>
+```
+
+### User Tracking Integration
+
+**User Context Sources:**
+1. **Authenticated user**: From Tauri window state or app-level context (future Phase 2+)
+2. **System operations**: Use `'system'` as user_id for automated tasks (sync, migrations)
+3. **Offline mode**: Use `'offline-user'` or device identifier
+
+**Current Implementation (MVP - Single User):**
+- Hardcode `user_id = 'primary-user'` for all manual operations
+- Use `'system'` for automated operations (audit cleanup, sync, scheduled tasks)
+- **Post-MVP**: Replace with actual user context when multi-user support added
+
+**User ID Storage:**
+```typescript
+// src/core/auth/context.ts (future)
+export const getCurrentUser = () => 'primary-user' // MVP stub
+export const isSystemOperation = () => false
+```
+
+**Audit Writer Usage:**
+```typescript
+const userId = context.isSystemOperation ? 'system' : getCurrentUser()
+await auditLog.create({
+  user_id: userId,
+  // ...
+})
+```
+
+### Error Handling for Audit Write Failures
+
+**Non-Blocking Principle:**
+- **Audit write failures MUST NOT block document operations**
+- Audit is observability, not transactional integrity
+- Primary operation succeeds even if audit fails
+
+**Error Handling Strategy:**
+```typescript
+async function recordAudit(entry: AuditEntry) {
+  try {
+    await db.insert('audit_log', entry)
+  } catch (error) {
+    // Log error but DO NOT throw
+    console.error('[Audit] Failed to write audit log:', error)
+
+    // Optional: Write to fallback audit buffer
+    await fallbackAuditBuffer.append(entry).catch(() => {
+      // Even fallback failed - log and continue
+      console.error('[Audit] Fallback buffer write failed')
+    })
+  }
+}
+```
+
+**Fallback Audit Buffer (Optional Enhancement):**
+- In-memory circular buffer (max 1000 entries)
+- Periodically retry writes to database
+- Cleared on successful batch write or app restart
+- Prevents audit loss during temporary DB contention
+
+**Monitoring:**
+- Track audit write failure rate in application metrics
+- Alert if failure rate exceeds threshold (e.g., >1% of operations)
+- Include audit health check in diagnostic reports
+
 ## File Structure Requirements
 
 - Metadata: DocType definitions include `audit_enabled` flag.

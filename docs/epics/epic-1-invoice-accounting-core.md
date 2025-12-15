@@ -10,9 +10,15 @@ So that my invoices, payments, and reports stay organized and accurate.
 
 **Acceptance Criteria:**
 
-**Given** I open the Chart of Accounts screen  
-**When** I view the list of accounts  
+**Given** I open the Chart of Accounts screen
+**When** I view the list of accounts
 **Then** I see accounts in a tree view (group/child structure) showing code, name, type, and status (Active/Archived)
+**And** the tree view is rendered using the DocType metadata-driven listing system with `listing.variant: "tree"` configured in the chart_of_accounts DocType
+**And** the tree structure is derived from `listing.tree.parent_field` and `listing.tree.is_group_field` metadata
+**And** I can expand/collapse groups using tree toggle controls with stable data-testids (e.g., `tree-toggle`, `tree-row-${id}`)
+**And** the listing supports filters auto-derived from DocType fields (e.g., account type, status) with data-testids like `filter-${field}`
+**And** I can search accounts using fields defined in `listing.search_fields` metadata
+**And** row actions (edit, archive, delete) are configured via `listing.actions.row` metadata and rendered with data-testids like `row-actions-${actionId}-${id}`
 
 **Given** I am on the Chart of Accounts screen  
 **When** I create a new account with a unique code, name, and valid type  
@@ -37,9 +43,16 @@ So that invoices, payments, and reports stay tied to the right parties without d
 
 **Acceptance Criteria:**
 
-**Given** I open the “Clients & Vendors” area  
-**When** I switch between Clients and Vendors  
+**Given** I open the "Clients & Vendors" area
+**When** I switch between Clients and Vendors
 **Then** I see a dedicated list for Clients and a separate list for Vendors (two distinct doctypes), each with name, type (Client or Vendor), and status (Active/Archived)
+**And** both Client and Vendor lists are rendered using the unified DocType metadata-driven listing system via routes `/list?doctype=client` and `/list?doctype=vendor`
+**And** columns are auto-derived from DocType field metadata (name, contact details, payment terms, currency, status) with optional custom renderers configured in `listing.columns`
+**And** filters are auto-derived from filterable DocType fields (e.g., status, currency) with stable data-testids like `filter-${field}` and `filter-chip-${field}`
+**And** I can search using fields defined in `listing.search_fields` metadata with data-testid `listing-search`
+**And** row actions (edit, archive, delete) are configured via `listing.actions.row` metadata with confirm dialogs when flagged
+**And** bulk actions are available when `listing.actions.bulk` is configured with data-testids like `bulk-action-${actionId}`
+**And** status chips are rendered when `listing.status_chip` metadata is configured with mappings for Active/Archived states
 
 **Given** I am on the Clients list  
 **When** I create a new client with a name, optional contact details (email/phone), payment terms, and default currency  
@@ -89,10 +102,17 @@ So that I can prepare billing documents before finalizing and submitting them.
 **Then** the invoice is permanently removed and no longer appears in lists or reports  
 **And** once an invoice is Submitted, it can no longer be deleted and must instead be handled by later adjustment or cancellation flows
 
-**Given** I create a new Draft sales invoice  
-**When** it is saved  
-**Then** it receives a unique invoice number following the configured pattern  
+**Given** I create a new Draft sales invoice
+**When** it is saved
+**Then** it receives a unique invoice number following the configured pattern
 **And** it appears in the Sales Invoices list with key columns such as number, client, date, due date, status, and total
+**And** the Sales Invoices list is rendered using the DocType metadata-driven listing system via route `/list?doctype=sales_invoice`
+**And** columns (number, client, date, due date, status, total) are configured in `listing.columns` metadata with appropriate renderers (e.g., currency formatting for total, status chips for invoice status)
+**And** filters are auto-derived from filterable fields (e.g., client, status, date range, payment status) with data-testids like `filter-${field}`
+**And** I can save frequently-used filter combinations as saved views using `listing.saved_views_enabled: true`
+**And** row actions (view, edit, submit, cancel, delete) are configured via `listing.actions.row` metadata
+**And** bulk actions (e.g., bulk submit, bulk export) are available when configured via `listing.actions.bulk` metadata
+**And** pagination or virtualization is applied based on `listing.pagination` metadata settings
 
 ## Story 1.4: Create Draft Purchase Invoices
 
@@ -122,10 +142,17 @@ So that I can prepare vendor bills before finalizing and submitting them.
 **Then** the invoice is permanently removed and no longer appears in lists or reports  
 **And** once a purchase invoice is Submitted, it can no longer be deleted and must instead be handled by later adjustment or cancellation flows
 
-**Given** I create a new Draft purchase invoice  
-**When** it is saved  
-**Then** it receives a unique invoice number following the configured pattern for purchase invoices  
+**Given** I create a new Draft purchase invoice
+**When** it is saved
+**Then** it receives a unique invoice number following the configured pattern for purchase invoices
 **And** it appears in the Purchase Invoices list with key columns such as number, vendor, date, due date, status, and total
+**And** the Purchase Invoices list is rendered using the DocType metadata-driven listing system via route `/list?doctype=purchase_invoice`
+**And** columns (number, vendor, date, due date, status, total) are configured in `listing.columns` metadata with appropriate renderers (e.g., currency formatting for total, status chips for invoice status)
+**And** filters are auto-derived from filterable fields (e.g., vendor, status, date range, payment status) with data-testids like `filter-${field}`
+**And** I can save frequently-used filter combinations as saved views using `listing.saved_views_enabled: true`
+**And** row actions (view, edit, submit, cancel, delete) are configured via `listing.actions.row` metadata
+**And** bulk actions (e.g., bulk submit, bulk export) are available when configured via `listing.actions.bulk` metadata
+**And** pagination or virtualization is applied based on `listing.pagination` metadata settings
 
 ## Story 1.5: Record Payments and Maintain Invoice Status
 
@@ -135,11 +162,12 @@ So that my invoice statuses, receivables, and payables stay accurate without man
 
 **Acceptance Criteria:**
 
-**Given** there are Submitted sales invoices in the system  
-**When** I record a payment received from a client and allocate it to one or more sales invoices  
-**Then** the system updates the outstanding amounts on each affected invoice  
-**And** each invoice’s payment status moves automatically among Unpaid, Partially Paid, and Paid based on the remaining balance while the document status remains Submitted unless I explicitly cancel or amend it  
+**Given** there are Submitted sales invoices in the system
+**When** I record a payment received from a client and allocate it to one or more sales invoices
+**Then** the system updates the outstanding amounts on each affected invoice
+**And** each invoice's payment status moves automatically among Unpaid, Partially Paid, and Paid based on the remaining balance while the document status remains Submitted unless I explicitly cancel or amend it
 **And** the payment appears in a payments list with basic details (party, date, amount, allocation summary)
+**And** the Payments list is rendered using the DocType metadata-driven listing system via route `/list?doctype=payment` with columns, filters, and actions configured in the payment DocType metadata
 
 **Given** there are Submitted purchase invoices in the system  
 **When** I record a payment made to a vendor and allocate it to one or more purchase invoices  
@@ -159,10 +187,15 @@ So that day-to-day costs still show up correctly in my accounting without heavy 
 
 **Acceptance Criteria:**
 
-**Given** I open the Expenses screen  
-**When** I create a new expense with at least: date, amount, currency, an expense category, and a payment method (plus an optional client/project/link)  
-**Then** the expense is saved and appears in the Expenses list with key fields visible  
-**And** the system derives the underlying expense and payment accounts from the selected category and payment method so that GL posting follows the configured mappings  
+**Given** I open the Expenses screen
+**When** I create a new expense with at least: date, amount, currency, an expense category, and a payment method (plus an optional client/project/link)
+**Then** the expense is saved and appears in the Expenses list with key fields visible
+**And** the Expenses list is rendered using the DocType metadata-driven listing system via route `/list?doctype=expense`
+**And** columns (date, description, category, amount, currency, payment method, client/project) are configured in `listing.columns` metadata with appropriate renderers (e.g., currency formatting, date localization)
+**And** filters are auto-derived from filterable fields (e.g., category, payment method, date range, client/project) with data-testids like `filter-${field}`
+**And** I can search expenses using fields defined in `listing.search_fields` metadata
+**And** row actions (view, edit, delete) are configured via `listing.actions.row` metadata
+**And** the system derives the underlying expense and payment accounts from the selected category and payment method so that GL posting follows the configured mappings
 **And** the expense becomes available for inclusion in accounting reports
 
 **Given** an existing expense that has been saved but is not locked by later controls  
@@ -187,9 +220,10 @@ So that I can trust the accounting data and see how my business is performing ov
 **Then** the system automatically creates or updates general ledger entries with balanced debits and credits for each posting  
 **And** it blocks any operation that would result in an unbalanced ledger, showing a clear error instead
 
-**Given** I open the General Ledger report  
-**When** I filter by account, date range, and optional dimensions (for example, client or project)  
+**Given** I open the General Ledger report
+**When** I filter by account, date range, and optional dimensions (for example, client or project)
 **Then** I see a list of ledger entries with opening balance, debits, credits, and closing balance for the selected filters
+**And** the General Ledger listing can leverage the DocType metadata-driven system for filters, search, and export functionality where applicable
 
 **Given** I open the basic financial summaries view  
 **When** I select a period (for example, this month, last month, or a custom date range)  
@@ -204,9 +238,10 @@ So that I can correct or adjust my books while keeping the general ledger balanc
 
 **Acceptance Criteria:**
 
-**Given** I open the Journal Entries screen  
-**When** I create a new journal entry in Draft with at least one debit line and one credit line and the debits and credits balance  
-**Then** the entry can be saved and later submitted  
+**Given** I open the Journal Entries screen
+**When** I create a new journal entry in Draft with at least one debit line and one credit line and the debits and credits balance
+**Then** the entry can be saved and later submitted
+**And** the Journal Entries list is rendered using the DocType metadata-driven listing system via route `/list?doctype=journal_entry` with columns, filters, and actions configured in the journal_entry DocType metadata
 **And** the system blocks submission if debits and credits are not balanced, with a clear explanation
 
 **Given** a Draft journal entry  
@@ -245,10 +280,11 @@ So that I can analyse it externally or share it with my accountant without being
 
 **Acceptance Criteria:**
 
-**Given** I am viewing a report or list such as the General Ledger, Invoices, Payments, or Expenses  
-**When** I apply filters (for example, by account, date range, client, or project) and choose an Export to CSV action  
-**Then** the system generates a CSV file that includes at least the visible columns and key identifiers for the records in the current filtered view  
+**Given** I am viewing a report or list such as the General Ledger, Invoices, Payments, or Expenses
+**When** I apply filters (for example, by account, date range, client, or project) and choose an Export to CSV action
+**Then** the system generates a CSV file that includes at least the visible columns and key identifiers for the records in the current filtered view
 **And** the exported file can be opened in common spreadsheet tools without additional transformation
+**And** CSV export functionality for DocType-based listings is gated by `listing.toolbar` metadata flags, ensuring consistent export behavior across all listing views
 
 **Given** I export from different lists or reports  
 **When** I inspect the CSV files  

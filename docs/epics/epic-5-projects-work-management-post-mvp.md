@@ -10,9 +10,10 @@ So that I can see all active work and its state in one structured place.
 
 **Acceptance Criteria:**
 
-**Given** I open the Projects list  
-**When** I create a new project with at least: project name, client, status (for example, Planned, In Progress, On Hold, Completed, Cancelled), and an optional high-level description  
-**Then** the project is saved and appears in the Projects list with those fields visible  
+**Given** I open the Projects list
+**When** I create a new project with at least: project name, client, status (for example, Planned, In Progress, On Hold, Completed, Cancelled), and an optional high-level description
+**Then** the project is saved and appears in the Projects list with those fields visible
+**And** the Projects list is rendered using the DocType metadata-driven listing system via route `/list?doctype=project` with columns, filters, status chips, and actions configured in the project DocType metadata
 **And** I can optionally link the project to one or more leads or invoices for traceability
 
 **Given** an existing project  
@@ -28,10 +29,11 @@ So that I can break down project work into manageable units and see what needs d
 
 **Acceptance Criteria:**
 
-**Given** I am viewing a specific project  
-**When** I add a task with at least: subject, optional detailed description, status (for example, To Do, In Progress, Blocked, Done), and an optional due date  
-**Then** the task is saved under that project and appears in both the project’s task list and any global task views  
-**And** I can later update the task’s status, due date, or description as work progresses
+**Given** I am viewing a specific project
+**When** I add a task with at least: subject, optional detailed description, status (for example, To Do, In Progress, Blocked, Done), and an optional due date
+**Then** the task is saved under that project and appears in both the project's task list and any global task views
+**And** task lists (both project-scoped and global) use the DocType metadata-driven listing system via routes like `/list?doctype=task` with appropriate filters for project context
+**And** I can later update the task's status, due date, or description as work progresses
 
 **Given** I am working through a project’s tasks  
 **When** I filter or sort tasks by status or due date  

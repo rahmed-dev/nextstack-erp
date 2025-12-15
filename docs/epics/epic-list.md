@@ -29,3 +29,14 @@ Allow the user to track leads and follow-ups in a structured pipeline so they st
 Let the user organize work into projects and tasks and connect that work back to invoices and expenses.
 
 **FRs covered:** FR25, FR26, FR27.
+
+## Epic 6: Mobile Companion (Deferred to Phase 3)
+
+Provide a mobile companion app (iOS/Android) for quick expense capture, offline data access, and on-the-go notifications.
+
+**Status:** Deferred to Phase 3 (Post-MVP)
+**Reason:** Requires substantial mobile architecture work (4-6 weeks) including technology stack selection, code sharing strategy, and mobile-specific security patterns. Desktop MVP takes priority.
+
+**FRs covered:** Mobile-specific requirements (offline capture, mobile sync, mobile notifications).
+
+**Review after:** Desktop MVP (Epics 0, 1, 3) is shipped and stable.

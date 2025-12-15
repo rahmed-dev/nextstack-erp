@@ -27,10 +27,11 @@ So that I can understand what is driving each number and verify that it looks co
 
 **Acceptance Criteria:**
 
-**Given** I am viewing the Money Cockpit dashboard for a selected time window  
-**When** I click on a high-level metric such as outstanding receivables, total income, or total expenses  
-**Then** I am taken to a filtered list view (for example, invoices, payments, or expenses) that shows the documents contributing to that metric  
-**And** the filters applied (date range, status, type) are visible and can be adjusted by me
+**Given** I am viewing the Money Cockpit dashboard for a selected time window
+**When** I click on a high-level metric such as outstanding receivables, total income, or total expenses
+**Then** I am taken to a filtered list view (for example, invoices, payments, or expenses) that shows the documents contributing to that metric
+**And** the drill-down uses the DocType metadata-driven listing system (e.g., `/list?doctype=sales_invoice&status=unpaid`) with pre-applied filters based on the metric clicked
+**And** the filters applied (date range, status, type) are visible and can be adjusted by me using the standard listing filter controls
 
 **Given** I am on a filtered list that I reached from the dashboard  
 **When** I clear or change the filters  
@@ -45,9 +46,10 @@ So that I can prioritise follow-ups and payments without scanning every invoice 
 
 **Acceptance Criteria:**
 
-**Given** invoice ageing buckets and “approaching due” / “overdue” thresholds are configured in accounting or receivables settings  
-**When** I open the Receivables focus view  
-**Then** I see a list of client invoices that are unpaid, grouped or highlighted by ageing bucket (for example, current, approaching due, overdue) according to those settings  
+**Given** invoice ageing buckets and "approaching due" / "overdue" thresholds are configured in accounting or receivables settings
+**When** I open the Receivables focus view
+**Then** I see a list of client invoices that are unpaid, grouped or highlighted by ageing bucket (for example, current, approaching due, overdue) according to those settings
+**And** the Receivables view uses the same DocType metadata-driven listing system as the Sales Invoices list, with pre-applied filters for unpaid status and ageing-based sorting/grouping
 **And** no specific number of days is hard-coded in the application logic; changing the settings updates how invoices are classified
 
 **Given** I open the Payables focus view  
@@ -63,10 +65,12 @@ So that I can quickly find and review invoices by client, status, date range, or
 
 **Acceptance Criteria:**
 
-**Given** I open the Sales Invoices list  
-**When** I filter by client, document status (Draft, Submitted, Cancelled), payment status (Unpaid, Partially Paid, Paid, Overdue), date range, or amount range  
-**Then** the list updates to show only invoices that match those filters  
-**And** I can combine multiple filters (for example, a specific client and “Unpaid” and a given date range)
+**Given** I open the Sales Invoices list
+**When** I filter by client, document status (Draft, Submitted, Cancelled), payment status (Unpaid, Partially Paid, Paid, Overdue), date range, or amount range
+**Then** the list updates to show only invoices that match those filters
+**And** all filters are auto-derived from the sales_invoice DocType metadata via `listing.filters`, leveraging the metadata-driven listing system
+**And** I can combine multiple filters (for example, a specific client and "Unpaid" and a given date range)
+**And** I can save frequently-used filter combinations as saved views when `listing.saved_views_enabled: true`
 
 **Given** I open the Purchase Invoices list  
 **When** I apply similar filters for vendor, document status, payment status, date range, or amount range  

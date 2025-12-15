@@ -10,9 +10,10 @@ So that I have a single, structured place to track potential work instead of rel
 
 **Acceptance Criteria:**
 
-**Given** I open the Leads list  
-**When** I create a new lead with at least: client or organization name, short description, source (for example Upwork, referral, direct), estimated value, stage, and next action with a next-action date  
-**Then** the lead is saved and appears in the Leads list with those fields visible in columns or detail view  
+**Given** I open the Leads list
+**When** I create a new lead with at least: client or organization name, short description, source (for example Upwork, referral, direct), estimated value, stage, and next action with a next-action date
+**Then** the lead is saved and appears in the Leads list with those fields visible in columns or detail view
+**And** the Leads list is rendered using the DocType metadata-driven listing system via route `/list?doctype=lead` with columns, filters, sorting, and actions configured in the lead DocType metadata
 **And** I can optionally store a link back to the original job/posting or external reference
 
 **Given** an existing lead  
@@ -51,10 +52,11 @@ So that I can start my day knowing exactly which conversations need attention.
 
 **Acceptance Criteria:**
 
-**Given** leads have a next-action date and next-action description  
-**When** I open a “Today” or “Follow Up Today” leads view  
-**Then** I see leads whose next-action date is today, grouped or highlighted so they stand out  
-**And** I can filter or sort this view further by stage, source, or estimated value
+**Given** leads have a next-action date and next-action description
+**When** I open a "Today" or "Follow Up Today" leads view
+**Then** I see leads whose next-action date is today, grouped or highlighted so they stand out
+**And** these focused views use the same DocType metadata-driven listing system as the main Leads list, with pre-applied filters for next-action date
+**And** I can filter or sort this view further by stage, source, or estimated value using the standard listing filter controls
 
 **Given** I open an “Overdue” leads view  
 **When** the system compares each lead’s next-action date to the current date  
